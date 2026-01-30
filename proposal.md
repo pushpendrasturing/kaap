@@ -517,3 +517,13 @@
 - B29 - Metaformat init container fails on existing clusters (upgrade regression, realistic).
 - B36 - Superuser tokens not generated (security, auth bootstrap).
 - B35 - ZooKeeper servers list off-by-one (core correctness, quorum failures).
+
+## Instances I01–I05 (balanced by type + ranking tier)
+Each instance has 8 bugs and includes a mix of correctness, reliability, time/perf, security, and data-integrity issues.
+High-ranked items (from the Top 10) are distributed evenly (2 per instance).
+
+- I01: B01, B05, B10, B18, B23, B30, B37, B39
+- I02: B09, B12, B03, B14, B21, B26, B32, B40
+- I03: B16, B17, B06, B11, B24, B28, B31, B38
+- I04: B22, B29, B02, B07, B19, B25, B33, B34
+- I05: B35, B36, B04, B08, B13, B15, B20, B27
