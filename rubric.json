@@ -1,0 +1,40 @@
+{
+  "upload_directory": "/tmp/files/",
+  "output_directory": "/tmp/outputs/",
+  "system_prompt": "You are an expert code reviewer. Analyze the provided codebase for bugs, security issues, and correctness problems. Provide actionable feedback. All files are located in /tmp/files",
+  "task_prompt": "You are an expert code reviewer. Your task is to analyze the KAAP operator codebase (controllers, autoscaler, CRDs, and migration tool). Identify subtle bugs, security regressions, data consistency issues, and logic flaws. Focus on issues detectable via static analysis. Write your findings to /tmp/outputs/review.md.",
+  "rubric": [
+    {
+      "criterion": "Identifies the task leak bug in operator/src/main/java/com/datastax/oss/kaap/NamespacedDaemonThread.java (onSpecChange) where cancelTasks() is no longer called on spec changes, causing scheduled tasks to accumulate across updates",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the stabilization window inversion in operator/src/main/java/com/datastax/oss/kaap/autoscaler/AutoscalerUtils.java (isStsReadyToScale) where the pod start-time check uses isBefore(maxStartTime), allowing scaling too early and blocking scaling when pods are old",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the default-set fallback bug in operator/src/main/java/com/datastax/oss/kaap/controllers/AbstractResourceSetsController.java (getSetSpecs) where the default set uses the raw spec without applying defaults, causing missing inherited defaults",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the PDB version check bug in operator/src/main/java/com/datastax/oss/kaap/controllers/BaseResourcesFactory.java (isPdbSupported) where the major/minor comparison uses ||, incorrectly enabling policy/v1 on unsupported Kubernetes versions",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the decommission selection bug in operator/src/main/java/com/datastax/oss/kaap/autoscaler/bookkeeper/BookieDecommissionUtil.java (decommissionBookies) where the first N bookies are chosen instead of the last N, changing which bookies are removed during scale-down",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the under-replicated ledger check bug in operator/src/main/java/com/datastax/oss/kaap/autoscaler/bookkeeper/PodExecBookieAdminClient.java (doesNotHaveUnderReplicatedLedgers) where the response requires exact string equality, making the check fail with extra whitespace or formatting",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the TLS flag inversion in operator/src/main/java/com/datastax/oss/kaap/controllers/broker/BrokerResourcesFactory.java (patchConfigMap) where TLS configuration is applied when TLS is disabled due to a negated tlsEnabledOnBrokerSet check",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the integer-division bug in operator/src/main/java/com/datastax/oss/kaap/autoscaler/broker/LoadReportResourceUsageSource.java (LoadReportResourceUsage.percentUsage) where usage/limit are cast to int before division, truncating fractions and misreporting CPU usage",
+      "weight": 1
+    }
+  ]
+}
