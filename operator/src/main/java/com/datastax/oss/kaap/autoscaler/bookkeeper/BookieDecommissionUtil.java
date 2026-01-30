@@ -28,8 +28,7 @@ public class BookieDecommissionUtil {
     public static int decommissionBookies(List<BookieAdminClient.BookieInfo> allBookies, int numToDecommission,
                                           BookieAdminClient bookieAdminClient) {
         List<BookieAdminClient.BookieInfo> bookiesToRemove = new ArrayList<>();
-        int sz = allBookies.size();
-        for (int i = sz - 1; i >= sz - numToDecommission; i--) {
+        for (int i = 0; i < numToDecommission; i++) {
             bookiesToRemove.add(allBookies.get(i));
         }
         return decommissionBookies(bookiesToRemove, bookieAdminClient);

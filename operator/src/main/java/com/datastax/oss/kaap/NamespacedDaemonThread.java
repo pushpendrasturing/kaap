@@ -51,7 +51,6 @@ public abstract class NamespacedDaemonThread<T> implements AutoCloseable {
         final T newSpec = getSpec(clusterSpec);
         final boolean isChanged = namespaceContext.isChanged(newSpec);
         if (isChanged) {
-            cancelTasks();
             final List<ScheduledFuture<?>> newTasks = specChanged(namespace, newSpec, clusterSpec);
             if (newTasks != null) {
                 tasks.addAll(newTasks);

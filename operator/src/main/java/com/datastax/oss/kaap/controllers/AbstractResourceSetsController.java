@@ -239,9 +239,7 @@ public abstract class AbstractResourceSetsController<T extends CustomResource<FU
         Map<String, SETSPEC> sets = getSets(spec);
         if (sets == null || sets.isEmpty()) {
             final String defaultSetName = getDefaultSetName();
-            sets = new LinkedHashMap(Map.of(defaultSetName,
-                    ConfigUtil.applyDefaultsWithReflection(spec.getClass().getConstructor().newInstance(),
-                            () -> spec)));
+            sets = new LinkedHashMap(Map.of(defaultSetName, spec));
         } else {
             for (Map.Entry<String, SETSPEC> set : sets.entrySet()) {
                 sets.put(set.getKey(),

@@ -125,7 +125,7 @@ public class LoadReportResourceUsageSource implements BrokerResourceUsageSource 
         public float percentUsage() {
             float proportion = 0;
             if (limit > 0) {
-                proportion = ((float) usage) / ((float) limit);
+                proportion = ((int) usage) / ((int) limit);
             }
             return proportion;
         }

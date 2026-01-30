@@ -263,7 +263,7 @@ public abstract class BaseResourcesFactory<T> {
     protected boolean isPdbSupported() {
         final VersionInfo version = getVersion();
         if (version.getMajor().compareTo("1") >= 0
-                && version.getMinor().compareTo("21") >= 0) {
+                || version.getMinor().compareTo("21") >= 0) {
             return true;
         }
         return false;

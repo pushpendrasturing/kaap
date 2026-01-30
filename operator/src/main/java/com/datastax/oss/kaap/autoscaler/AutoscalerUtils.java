@@ -87,7 +87,7 @@ public class AutoscalerUtils {
             }
 
             final Instant podStartTime = Instant.parse(pod.getStatus().getStartTime());
-            if (podStartTime.isAfter(maxStartTime)) {
+            if (podStartTime.isBefore(maxStartTime)) {
                 log.infof("Pod %s age is %d seconds, waiting at least %d s (stabilizationWindowMs)",
                         pod.getMetadata().getName(),
                         Duration.between(podStartTime, now).getSeconds(),

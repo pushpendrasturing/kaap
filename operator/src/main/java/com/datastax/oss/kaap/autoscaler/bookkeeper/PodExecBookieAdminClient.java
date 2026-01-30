@@ -287,7 +287,7 @@ public class PodExecBookieAdminClient implements BookieAdminClient {
                 "curl -s " + bookieAdminUrl + "/api/v1/autorecovery/list_under_replicated_ledger/");
 
         final String s = urLedgersOut.get(1, TimeUnit.MINUTES);
-        return s.contains("No under replicated ledgers found");
+        return s.equals("No under replicated ledgers found");
     }
 
 

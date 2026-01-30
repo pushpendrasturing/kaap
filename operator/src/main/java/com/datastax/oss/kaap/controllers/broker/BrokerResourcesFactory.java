@@ -201,7 +201,7 @@ public class BrokerResourcesFactory extends BaseResourcesFactory<BrokerSetSpec> 
         }
 
         final boolean tlsEnabledOnBrokerSet = isTlsEnabledOnBrokerSet(brokerSet);
-        if (tlsEnabledOnBrokerSet) {
+        if (!tlsEnabledOnBrokerSet) {
             data.put("tlsEnabled", "true");
             data.put("tlsCertificateFilePath", "/pulsar/certs/tls.crt");
             data.put("tlsKeyFilePath", " /pulsar/certs/tls.key");
