@@ -1,0 +1,40 @@
+{
+  "upload_directory": "/tmp/files/",
+  "output_directory": "/tmp/outputs/",
+  "system_prompt": "You are an expert code reviewer. Analyze the provided codebase for bugs, security issues, and correctness problems. Provide actionable feedback. All files are located in /tmp/files",
+  "task_prompt": "You are an expert code reviewer. Your task is to analyze the KAAP operator codebase (controllers, autoscaler, CRDs, and migration tool). Identify subtle bugs, security regressions, data consistency issues, and logic flaws. Focus on issues detectable via static analysis. Write your findings to /tmp/outputs/review.md.",
+  "rubric": [
+    {
+      "criterion": "Identifies the ZooKeeper server list off-by-one in operator/src/main/java/com/datastax/oss/kaap/controllers/zookeeper/ZooKeeperResourcesFactory.java (patchStatefulSet) where the loop uses i <= replicas, adding a non-existent member to the ensemble",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the superuser token generation bug in operator/src/main/java/com/datastax/oss/kaap/controllers/utils/TokenAuthProvisioner.java (generateSecretsIfAbsent) where superUserRoles is set from proxyRoles, causing missing superuser tokens",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the last-applied tracking bug in operator/src/main/java/com/datastax/oss/kaap/controllers/AbstractResourceSetsController.java (patchResources) where set-specific lastApplied is stored as the common spec, breaking per-set diffing",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the SpecDiffer null-handling regression in operator/src/main/java/com/datastax/oss/kaap/crds/SpecDiffer.java (generateDiff) where expectedSpec==null returns RESULT_EQUALS, preventing detection of spec removal",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the autoscaler guard removal in operator/src/main/java/com/datastax/oss/kaap/controllers/PulsarClusterController.java (adjustBrokerReplicas) where replicas are copied even when broker autoscaler is disabled, overwriting user settings",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the missing-ready condition behavior in operator/src/main/java/com/datastax/oss/kaap/controllers/PulsarClusterController.java (checkReadyOrPatch) where a missing Ready condition is treated as ready",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the rack daemon scheduling unit bug in operator/src/main/java/com/datastax/oss/kaap/controllers/bookkeeper/racks/BookKeeperRackDaemon.java (specChanged) where TimeUnit.SECONDS is used for a periodMs value",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the disk usage inversion in operator/src/main/java/com/datastax/oss/kaap/autoscaler/bookkeeper/PodExecBookieAdminClient.java (parseAndFillDiskUsage) where usedBytes is set to free space, flipping usage ratios",
+      "weight": 1
+    }
+  ]
+}
