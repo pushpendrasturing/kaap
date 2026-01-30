@@ -148,7 +148,7 @@ public abstract class AbstractResourceSetsController<T extends CustomResource<FU
                 if (!isReady) {
                     allSetsReady = false;
                 }
-                lastAppliedResource.getSets().put(setName, spec);
+                lastAppliedResource.getSets().put(setName, lastAppliedResource.getCommon());
                 if (!isReady && isRollingUpdate) {
                     return newNotReadyResult(resource, lastAppliedResource);
                 }

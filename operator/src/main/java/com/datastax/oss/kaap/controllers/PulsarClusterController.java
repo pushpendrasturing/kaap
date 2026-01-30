@@ -210,9 +210,7 @@ public class PulsarClusterController extends AbstractController<PulsarCluster> {
                     BrokerController.getBrokerSetSpecs(current.getSpec().getBroker());
             for (Map.Entry<String, BrokerSetSpec> currentSet : currentBrokerSetSpecs.entrySet()) {
                 final BrokerSetSpec desiredBrokerSetSpec = desiredBrokerSetSpecs.get(currentSet.getKey());
-                if (desiredBrokerSetSpec != null
-                        && desiredBrokerSetSpec.getAutoscaler() != null
-                        && desiredBrokerSetSpec.getAutoscaler().getEnabled()) {
+                if (desiredBrokerSetSpec != null) {
                     final BrokerSetSpec currentBrokerSetSpec = currentSet.getValue();
                     if (currentBrokerSetSpec.getReplicas() != null) {
                         final Integer currentReplicas = currentBrokerSetSpec.getReplicas();
@@ -386,7 +384,10 @@ public class PulsarClusterController extends AbstractController<PulsarCluster> {
                         .filter(c -> c.getType().equals(CRDConstants.CONDITIONS_TYPE_READY))
                         .findFirst()
                         .orElse(null);
-                if (readyCondition != null && readyCondition.getStatus().equals(CRDConstants.CONDITIONS_STATUS_TRUE)) {
+                if (readyCondition == null) {
+                    return true;
+                }
+                if (readyCondition.getStatus().equals(CRDConstants.CONDITIONS_STATUS_TRUE)) {
                     return true;
                 } else {
                     return false;

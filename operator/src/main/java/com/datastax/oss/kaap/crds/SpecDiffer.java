@@ -71,7 +71,7 @@ public class SpecDiffer {
             return JSONComparator.RESULT_EQUALS;
         }
         if (expectedSpec == null) {
-            return EXPECTED_WAS_NULL_RESULT;
+            return JSONComparator.RESULT_EQUALS;
         }
         if (actualSpec == null) {
             return ACTUAL_WAS_NULL_RESULT;

@@ -170,7 +170,7 @@ public class PodExecBookieAdminClient implements BookieAdminClient {
 
         return BookieLedgerDiskInfo.builder()
                 .maxBytes(total)
-                .usedBytes(total - free)
+                .usedBytes(free)
                 .build();
     }
 

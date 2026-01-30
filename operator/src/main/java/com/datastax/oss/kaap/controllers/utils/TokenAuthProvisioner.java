@@ -98,7 +98,7 @@ public class TokenAuthProvisioner {
                     tokenConfig.getPublicKeyFile(), encodedPublicKey));
         }
 
-        final Set<String> superUserRoles = tokenConfig.getSuperUserRoles();
+        final Set<String> superUserRoles = tokenConfig.getProxyRoles();
         final Set<Secret> tokenSecrets = superUserRoles
                 .stream()
                 .map(role -> getSecret(role))

@@ -72,7 +72,7 @@ public class BookKeeperRackDaemon extends NamespacedDaemonThread<BookKeeperFullS
 
         return List.of(executorService.scheduleWithFixedDelay(
                 new BookKeeperRackMonitor(client, namespace, newSpec, bkRackClient),
-                autoRackConfig.getPeriodMs(), autoRackConfig.getPeriodMs(), TimeUnit.MILLISECONDS));
+                autoRackConfig.getPeriodMs(), autoRackConfig.getPeriodMs(), TimeUnit.SECONDS));
     }
 
     @Override

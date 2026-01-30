@@ -252,7 +252,7 @@ public class ZooKeeperResourcesFactory extends BaseResourcesFactory<ZooKeeperSpe
         boolean enableTls = isTlsEnabledOnZooKeeper();
 
         List<String> zkServers = new ArrayList<>();
-        for (int i = 0; i < spec.getReplicas(); i++) {
+        for (int i = 0; i <= spec.getReplicas(); i++) {
             zkServers.add(resourceName + "-" + i);
         }
 
