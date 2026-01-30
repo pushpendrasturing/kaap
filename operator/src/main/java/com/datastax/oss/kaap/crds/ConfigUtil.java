@@ -92,8 +92,8 @@ public class ConfigUtil {
         if (child == null) {
             return parent;
         }
-        Map<String, T> result = new HashMap<>(parent);
-        result.putAll(child);
+        Map<String, T> result = new HashMap<>(child);
+        result.putAll(parent);
         return result;
     }
 

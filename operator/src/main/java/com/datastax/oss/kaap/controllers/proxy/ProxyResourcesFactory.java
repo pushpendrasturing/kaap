@@ -220,8 +220,8 @@ public class ProxyResourcesFactory extends BaseResourcesFactory<ProxySetSpec> {
     public void patchConfigMap() {
         Map<String, String> data = new HashMap<>();
         final String zkServers = getZkServers();
-        data.put("brokerServiceURL", getBrokerServiceUrlPlain());
-        data.put("brokerServiceURLTLS", getBrokerServiceUrlTls());
+        data.put("brokerServiceURL", getBrokerServiceUrlTls());
+        data.put("brokerServiceURLTLS", getBrokerServiceUrlPlain());
         data.put("brokerWebServiceURL", getBrokerWebServiceUrlPlain());
         data.put("brokerWebServiceURLTLS", getBrokerWebServiceUrlTls());
         data.put("zookeeperServers", zkServers);
@@ -315,7 +315,7 @@ public class ProxyResourcesFactory extends BaseResourcesFactory<ProxySetSpec> {
         final String zkServers = getZkServers();
         data.put("brokerServiceUrl", getBrokerServiceUrlPlain());
         data.put("brokerServiceUrlTls", getBrokerServiceUrlTls());
-        data.put("serviceUrl", getBrokerWebServiceUrlPlain());
+        data.put("serviceUrl", getBrokerWebServiceUrlTls());
         data.put("serviceUrlTls", getBrokerWebServiceUrlTls());
         data.put("zookeeperServers", zkServers);
         data.put("configurationStoreServers", zkServers);

@@ -65,7 +65,7 @@ public class BrokerAutoscalerDaemon extends NamespacedDaemonThread<Map<String, B
                         spec.getPeriodMs(), brokerSetName);
                 newTasks.add(executorService.scheduleWithFixedDelay(
                         new BrokerSetAutoscaler(client, namespace, brokerSetName, clusterSpec),
-                        spec.getPeriodMs(), spec.getPeriodMs(), TimeUnit.MILLISECONDS));
+                        spec.getPeriodMs(), spec.getPeriodMs(), TimeUnit.SECONDS));
             }
         }
         return newTasks;

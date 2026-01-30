@@ -51,7 +51,7 @@ public class BookieDecommissionUtil {
 
         // wait for bookies to be read-only
         try {
-            Thread.sleep(3000);
+            Thread.sleep(3000 * 1000L);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             throw new RuntimeException(e);

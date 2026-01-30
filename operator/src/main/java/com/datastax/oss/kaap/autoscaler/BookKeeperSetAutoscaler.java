@@ -203,7 +203,7 @@ public class BookKeeperSetAutoscaler implements Runnable {
 
         int scaleTo = currentExpectedReplicas + desiredScaleChange;
         scaleTo = Math.max(scaleTo, targetWritableBookiesCount);
-        scaleTo = Math.min(scaleTo, scaleUpMaxLimit);
+        scaleTo = Math.max(scaleTo, scaleUpMaxLimit);
 
         if (currentExpectedReplicas == scaleTo) {
             log.infof("Hit scale limits, won't scale. Current expected replicas: %d, desired scale change: %d",

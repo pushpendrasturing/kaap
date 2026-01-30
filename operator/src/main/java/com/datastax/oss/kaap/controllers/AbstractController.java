@@ -322,16 +322,6 @@ public abstract class AbstractController<T extends CustomResource<? extends Full
             }
         }
 
-        for (Condition condition : newConditions) {
-            final Condition prev =
-                    previousConditions.stream().filter(c -> c.getType().equals(condition.getType())).findFirst()
-                            .orElse(null);
-
-            if (prev != null) {
-                continue;
-            }
-            result.add(copyConditionWithLastTransitionTime(now, condition));
-        }
         return result;
     }
 

@@ -229,7 +229,7 @@ public class BookKeeperResourcesFactory extends BaseResourcesFactory<BookKeeperS
             metaformatArg += generateCertConverterScript() + " && ";
         }
         metaformatArg += "bin/apply-config-from-env.py conf/bookkeeper.conf "
-                + "&& bin/bookkeeper shell metaformat --nonInteractive || true;";
+                + "&& bin/bookkeeper shell metaformat --nonInteractive;";
 
         List<Container> initContainers = getInitContainers(spec.getInitContainers());
         initContainers.add(new ContainerBuilder()
