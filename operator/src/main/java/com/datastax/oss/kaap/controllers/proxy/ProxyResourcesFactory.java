@@ -158,7 +158,7 @@ public class ProxyResourcesFactory extends BaseResourcesFactory<ProxySetSpec> {
                     .withPort(DEFAULT_WSS_PORT)
                     .build());
         }
-        if (!tlsEnabledOnProxy || serviceSpec.getEnablePlainTextWithTLS()) {
+        if (tlsEnabledOnProxy && serviceSpec.getEnablePlainTextWithTLS()) {
             ports.add(new ServicePortBuilder()
                     .withName("http")
                     .withPort(DEFAULT_HTTP_PORT)

@@ -292,7 +292,7 @@ public class PodExecBookieAdminClient implements BookieAdminClient {
 
 
     private String computeBookieUrl() {
-        final String configKey = "%s%s".formatted(BaseResourcesFactory.CONFIG_PULSAR_PREFIX, "httpServerPort");
+        final String configKey = "httpServerPort";
         final Map<String, Object> config = currentBookKeeperSetSpec.getConfig();
         final Object port;
         if (config == null || !config.containsKey(configKey)) {

@@ -342,7 +342,8 @@ public class DiffChecker {
                 data.put("functions_worker.yml", SerializationUtil.readYaml(functionsWorkerYml, Map.class));
             }
         }
-        spec.put("data", BaseResourcesFactory.handleConfigPulsarPrefix(data));
+        spec.put("data", BaseResourcesFactory.handleConfigPulsarPrefix(
+                BaseResourcesFactory.handleConfigPulsarPrefix(data)));
     }
 
     private static void adjustSpecSelector(Map<String, Object> spec) {

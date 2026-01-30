@@ -237,9 +237,7 @@ public class PulsarClusterController extends AbstractController<PulsarCluster> {
 
             for (Map.Entry<String, BookKeeperSetSpec> currentSet : currentSpecs.entrySet()) {
                 final BookKeeperSetSpec desiredSetSpec = desiredSpecs.get(currentSet.getKey());
-                if (desiredSetSpec != null
-                        && desiredSetSpec.getAutoscaler() != null
-                        && desiredSetSpec.getAutoscaler().getEnabled()) {
+                if (desiredSetSpec != null) {
                     final BookKeeperSetSpec currentSetSpec = currentSet.getValue();
                     if (currentSetSpec.getReplicas() != null) {
                         final Integer currentReplicas = currentSetSpec.getReplicas();

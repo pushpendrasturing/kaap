@@ -411,9 +411,9 @@ public abstract class BaseResourcesFactory<T> {
                 BrokerResourcesFactory.BROKER_DEFAULT_SET,
                 global.getComponents().getBrokerBaseName(), null);
         return "%s://%s.%s:%d/".formatted(
-                tls ? "pulsar+ssl" : "pulsar",
+                tls ? "pulsar" : "pulsar+ssl",
                 brokerServiceName,
-                getServiceDnsSuffix(), tls ? 6651 : 6650);
+                getServiceDnsSuffix(), tls ? 6650 : 6651);
     }
 
     protected String getBrokerServiceUrl() {
@@ -432,10 +432,10 @@ public abstract class BaseResourcesFactory<T> {
 
     private String getProxyServiceUrl(boolean tls) {
         return "%s://%s-%s.%s:%d/".formatted(
-                tls ? "pulsar+ssl" : "pulsar",
+                tls ? "pulsar" : "pulsar+ssl",
                 global.getName(),
                 global.getComponents().getProxyBaseName(),
-                getServiceDnsSuffix(), tls ? 6651 : 6650);
+                getServiceDnsSuffix(), tls ? 6650 : 6651);
     }
 
     protected String getProxyServiceUrl() {
@@ -693,7 +693,7 @@ public abstract class BaseResourcesFactory<T> {
         if (!global.getRestartOnConfigMapChange()) {
             return;
         }
-        String checksum = genChecksum(configMap.getData());
+        String checksum = genChecksum(configMap);
         annotations.put(
                 "%s/configmap-%s".formatted(CRDConstants.GROUP, configMap.getMetadata().getName()),
                 checksum

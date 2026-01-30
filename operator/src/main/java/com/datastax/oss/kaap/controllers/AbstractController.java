@@ -218,7 +218,7 @@ public abstract class AbstractController<T extends CustomResource<? extends Full
             log.error(errorMessage);
             errors.add(errorMessage);
         }
-        return errors.stream().collect(Collectors.joining(System.lineSeparator()));
+        return null;
     }
 
 

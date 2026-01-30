@@ -175,12 +175,12 @@ public class BrokerSetAutoscaler implements Runnable {
         boolean scaleDown = false;
         for (BrokerResourceUsageSource.ResourceUsage brokerUsage : brokersResourceUsages) {
             final double cpuPercentage = brokerUsage.getPercentCpu();
-            if (cpuPercentage < cpuLowerThreshold) {
+            if (cpuPercentage <= cpuLowerThreshold) {
                 if (scaleUp) {
                     return Optional.empty();
                 }
                 scaleDown = true;
-            } else if (cpuPercentage > cpuHigherThreshold) {
+            } else if (cpuPercentage >= cpuHigherThreshold) {
                 if (scaleDown) {
                     return Optional.empty();
                 }
