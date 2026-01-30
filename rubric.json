@@ -1,0 +1,40 @@
+{
+  "upload_directory": "/tmp/files/",
+  "output_directory": "/tmp/outputs/",
+  "system_prompt": "You are an expert code reviewer. Analyze the provided codebase for bugs, security issues, and correctness problems. Provide actionable feedback. All files are located in /tmp/files",
+  "task_prompt": "You are an expert code reviewer. Your task is to analyze the KAAP operator codebase (controllers, autoscaler, CRDs, and migration tool). Identify subtle bugs, security regressions, data consistency issues, and logic flaws. Focus on issues detectable via static analysis. Write your findings to /tmp/outputs/review.md.",
+  "rubric": [
+    {
+      "criterion": "Identifies the validation suppression bug in operator/src/main/java/com/datastax/oss/kaap/controllers/AbstractController.java (validate) where violations are logged but the method returns null, allowing invalid specs to pass validation",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the configmap checksum bug in operator/src/main/java/com/datastax/oss/kaap/controllers/BaseResourcesFactory.java (addConfigMapChecksumAnnotation) where the checksum is computed from the entire ConfigMap object (including metadata/resourceVersion) instead of just data, causing unnecessary restarts",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the TLS/plain URL swap in operator/src/main/java/com/datastax/oss/kaap/controllers/BaseResourcesFactory.java (getBrokerServiceUrl/getProxyServiceUrl) where the TLS scheme/port pair is inverted, returning pulsar on 6650 for TLS and pulsar+ssl on 6651 for plaintext",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the autoscaler guard removal in operator/src/main/java/com/datastax/oss/kaap/controllers/PulsarClusterController.java (adjustBookKeeperReplicas) where current replicas are copied even when the bookkeeper autoscaler is disabled, overriding user-defined replicas",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the threshold boundary bug in operator/src/main/java/com/datastax/oss/kaap/autoscaler/BrokerSetAutoscaler.java (decideScaleUpOrDown) where <= and >= comparisons trigger scaling at exact threshold values, increasing flapping risk",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the bookie admin URL lookup bug in operator/src/main/java/com/datastax/oss/kaap/autoscaler/bookkeeper/PodExecBookieAdminClient.java (computeBookieUrl) where the unprefixed key \"httpServerPort\" is used instead of PULSAR_PREFIX_httpServerPort, ignoring custom ports",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the proxy service port exposure bug in operator/src/main/java/com/datastax/oss/kaap/controllers/proxy/ProxyResourcesFactory.java (patchService) where plaintext ports are only added when TLS is enabled and enablePlainTextWithTLS is true, omitting plaintext ports when TLS is disabled",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the double-prefix diff bug in migration-tool/src/main/java/com/datastax/oss/kaap/migrationtool/diff/DiffChecker.java (adjustConfigMapData) where handleConfigPulsarPrefix is applied twice, producing double-prefixed keys and false diffs",
+      "weight": 1
+    }
+  ]
+}
