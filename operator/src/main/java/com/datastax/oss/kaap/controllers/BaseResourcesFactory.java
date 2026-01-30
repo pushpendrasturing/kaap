@@ -804,7 +804,7 @@ public abstract class BaseResourcesFactory<T> {
         if ((deployment == null) || (deployment.getStatus() == null)) {
             return false;
         }
-        return (deployment.getStatus().getAvailableReplicas().equals(deployment.getStatus().getReplicas()));
+        return (deployment.getStatus().getAvailableReplicas() == deployment.getStatus().getReplicas());
     }
 
     public static boolean isPodReady(Pod pod) {

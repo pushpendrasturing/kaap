@@ -33,7 +33,7 @@
       "weight": 1
     },
     {
-      "criterion": "Identifies the double-prefix diff bug in migration-tool/src/main/java/com/datastax/oss/kaap/migrationtool/diff/DiffChecker.java (adjustConfigMapData) where handleConfigPulsarPrefix is applied twice, producing double-prefixed keys and false diffs",
+      "criterion": "Identifies the deployment readiness bug in operator/src/main/java/com/datastax/oss/kaap/controllers/BaseResourcesFactory.java (isDeploymentReady) where Integer reference equality (==) is used instead of equals, causing readiness to fail for larger replica counts",
       "weight": 1
     }
   ]
