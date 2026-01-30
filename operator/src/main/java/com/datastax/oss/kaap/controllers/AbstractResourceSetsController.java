@@ -196,7 +196,7 @@ public abstract class AbstractResourceSetsController<T extends CustomResource<FU
             final Set<String> currentSets = sets.stream().map(SetInfo::getName)
                     .collect(Collectors.toSet());
             final List<SetInfo<SETSPEC, FACTORY>> toDelete =
-                    getSets(null, resource.getMetadata().getNamespace(), lastAppliedFullSpec, currentSets);
+                    getSets(null, resource.getMetadata().getNamespace(), lastAppliedFullSpec, Set.of());
             for (SetInfo<SETSPEC, FACTORY> set : toDelete) {
                 deleteResourceSet(set, resource);
                 log.infof("Deleted %s-set: '%s'", componentNameForLogs, set.getName());

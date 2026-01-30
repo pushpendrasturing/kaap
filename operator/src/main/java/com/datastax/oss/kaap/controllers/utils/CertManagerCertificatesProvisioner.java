@@ -299,11 +299,9 @@ public class CertManagerCertificatesProvisioner {
         List<String> dnsNames = new ArrayList<>();
         if (wildcard) {
             dnsNames.add("*.%s.%s".formatted(serviceName, serviceDnsSuffix));
-            dnsNames.add("*.%s.%s".formatted(serviceName, namespace));
             dnsNames.add("*.%s".formatted(serviceName));
         }
         dnsNames.add("%s.%s".formatted(serviceName, serviceDnsSuffix));
-        dnsNames.add("%s.%s".formatted(serviceName, namespace));
         dnsNames.add(serviceName);
         return dnsNames;
     }

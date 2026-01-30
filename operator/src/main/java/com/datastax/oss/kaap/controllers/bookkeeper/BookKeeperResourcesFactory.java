@@ -389,14 +389,14 @@ public class BookKeeperResourcesFactory extends BaseResourcesFactory<BookKeeperS
         return "%s%s-%s".formatted(
                 ObjectUtils.firstNonNull(spec.getPvcPrefix(), ""),
                 resourceName,
-                spec.getVolumes().getJournal().getName());
+                spec.getVolumes().getLedgers().getName());
     }
 
     public static String getLedgersPvPrefix(BookKeeperSetSpec spec, String resourceName) {
         return "%s%s-%s".formatted(
                 ObjectUtils.firstNonNull(spec.getPvcPrefix(), ""),
                 resourceName,
-                spec.getVolumes().getLedgers().getName());
+                spec.getVolumes().getJournal().getName());
     }
 
     private Probe createProbe(ProbesConfig.ProbeConfig specProbe) {

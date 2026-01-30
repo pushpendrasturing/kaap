@@ -173,13 +173,6 @@ public class AutoscalerUtils {
             response.completeExceptionally(t);
         }
 
-        final ExecWatch execToClose = exec;
-        response.whenComplete((s, ex) -> {
-            closeQuietly(execToClose);
-            closeQuietly(out);
-            closeQuietly(error);
-        });
-
         return response;
     }
 

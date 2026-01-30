@@ -184,7 +184,7 @@ public class BookKeeperSetAutoscaler implements Runnable {
 
         // 3. only after that check if it's safe to scale down
         if (desiredScaleChange == 0 && clusterStats.writableBookiesTotal > targetWritableBookiesCount) {
-            boolean canScaleDown = checkIfCanScaleDown(diskUsageLwm, bookieInfos);
+            boolean canScaleDown = checkIfCanScaleDown(diskUsageHwm, bookieInfos);
             if (canScaleDown) {
                 desiredScaleChange -= Math.min(bookieSafeStepDown,
                         clusterStats.writableBookiesTotal - targetWritableBookiesCount);

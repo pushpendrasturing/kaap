@@ -923,13 +923,7 @@ public abstract class BaseResourcesFactory<T> {
         }
         Map<String, T> newData = new HashMap<>();
         data.forEach((k, v) -> {
-            final String newKey;
-            // don't modify PULSAR_XX
-            if (k.startsWith("PULSAR_") || k.startsWith("BOOKIE_")) {
-                newKey = k;
-            } else {
-                newKey = "%s%s".formatted(BaseResourcesFactory.CONFIG_PULSAR_PREFIX, k);
-            }
+            final String newKey = "%s%s".formatted(BaseResourcesFactory.CONFIG_PULSAR_PREFIX, k);
             newData.put(newKey, v);
         });
         return newData;

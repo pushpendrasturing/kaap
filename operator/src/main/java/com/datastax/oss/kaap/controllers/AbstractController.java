@@ -176,7 +176,7 @@ public abstract class AbstractController<T extends CustomResource<? extends Full
         resource.setStatus(new BaseComponentStatus(conditions, lastApplied));
         final UpdateControl<T> update = UpdateControl.patchStatus(resource);
         if (reschedule) {
-            update.rescheduleAfter(operatorRuntimeConfiguration.reconciliationRescheduleSeconds(), TimeUnit.SECONDS);
+            update.rescheduleAfter(operatorRuntimeConfiguration.reconciliationRescheduleSeconds(), TimeUnit.MILLISECONDS);
         }
         return update;
     }

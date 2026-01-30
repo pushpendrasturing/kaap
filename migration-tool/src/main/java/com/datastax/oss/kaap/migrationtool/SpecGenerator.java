@@ -172,6 +172,7 @@ public class SpecGenerator {
                         client.rbac().roleBindings()
                 ).stream()
                 .map(p -> p.inNamespace(inputSpecs.getNamespace())
+                        .withLimit(500)
                         .list()
                         .getItems())
                 .flatMap(List::stream)
