@@ -494,16 +494,16 @@
 - Suggested detection: integration test with mocked paginated list responses.
 - Rankings: Exercise value 3/5; Stealth 4/5; Scorability 3/5
 
-### B40 - Diff tool double-prefixes config keys
-- Location: migration-tool/src/main/java/com/datastax/oss/kaap/migrationtool/diff/DiffChecker.java, adjustConfigMapData() ~333-346
-- Core relevance: migration tool diff accuracy.
-- Bug type: correctness / API drift
-- Proposed change: call handleConfigPulsarPrefix on already-prefixed data (double prefix).
-- Trigger conditions: config maps that already have PULSAR_PREFIX_ keys.
-- Expected symptom: spurious diffs; false mismatch noise.
-- Why its hard: only in diff output; easy to attribute to user config.
+### B40 - Deployment readiness uses reference equality
+- Location: operator/src/main/java/com/datastax/oss/kaap/controllers/BaseResourcesFactory.java, isDeploymentReady(...) ~803-808
+- Core relevance: readiness gating for proxy/bastion/autorecovery deployments.
+- Bug type: correctness / numeric boundary
+- Proposed change: replace .equals() with == when comparing availableReplicas and replicas.
+- Trigger conditions: deployments with replicas > 127 (Integer cache boundary) or boxed Integer identity mismatch.
+- Expected symptom: readiness check fails despite deployment being healthy; reconcile loops continue.
+- Why its hard: only manifests at higher replica counts; looks like slow or stuck rollout.
 - Static-analysis discoverability: Medium.
-- Suggested detection: unit test that compares prefixed configmap data in diff.
+- Suggested detection: unit test for isDeploymentReady with replica count 200; integration test with large replica count.
 - Rankings: Exercise value 3/5; Stealth 4/5; Scorability 4/5
 
 ## Top 10 recommended set
