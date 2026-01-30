@@ -1,0 +1,40 @@
+{
+  "upload_directory": "/tmp/files/",
+  "output_directory": "/tmp/outputs/",
+  "system_prompt": "You are an expert code reviewer. Analyze the provided codebase for bugs, security issues, and correctness problems. Provide actionable feedback. All files are located in /tmp/files",
+  "task_prompt": "You are an expert code reviewer. Your task is to analyze the KAAP operator codebase (controllers, autoscaler, CRDs, and migration tool). Identify subtle bugs, security regressions, data consistency issues, and logic flaws. Focus on issues detectable via static analysis. Write your findings to /tmp/outputs/review.md.",
+  "rubric": [
+    {
+      "criterion": "Identifies the scale-up limit bug in operator/src/main/java/com/datastax/oss/kaap/autoscaler/BookKeeperSetAutoscaler.java (internalRun) where scaleTo is clamped with Math.max against scaleUpMaxLimit, allowing replicas to exceed the configured max",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the BookKeeper metaformat init bug in operator/src/main/java/com/datastax/oss/kaap/controllers/bookkeeper/BookKeeperResourcesFactory.java (generateStatefulSet) where the metaformat command no longer uses '|| true', causing init container failure on existing metadata",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the missing-condition merge bug in operator/src/main/java/com/datastax/oss/kaap/controllers/AbstractController.java (mergeConditions) where new condition types are no longer added when absent from previousConditions",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the map default precedence regression in operator/src/main/java/com/datastax/oss/kaap/crds/ConfigUtil.java (mergeMaps) where parent defaults overwrite child values due to reversed putAll order",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the broker autoscaler scheduling unit bug in operator/src/main/java/com/datastax/oss/kaap/autoscaler/BrokerAutoscalerDaemon.java (specChanged) where scheduleWithFixedDelay uses TimeUnit.SECONDS for a periodMs value",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the decommission wait-time bug in operator/src/main/java/com/datastax/oss/kaap/autoscaler/bookkeeper/BookieDecommissionUtil.java (decommissionBookies) where Thread.sleep uses 3000*1000L, causing excessively long waits during scale-down",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the proxy broker URL swap in operator/src/main/java/com/datastax/oss/kaap/controllers/proxy/ProxyResourcesFactory.java (patchConfigMap) where brokerServiceURL and brokerServiceURLTLS are assigned the opposite values",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the websocket serviceUrl TLS bug in operator/src/main/java/com/datastax/oss/kaap/controllers/proxy/ProxyResourcesFactory.java (patchConfigMapWsConfig) where serviceUrl is set to the TLS URL unconditionally even when TLS is disabled",
+      "weight": 1
+    }
+  ]
+}
