@@ -1,0 +1,40 @@
+{
+  "upload_directory": "/tmp/files/",
+  "output_directory": "/tmp/outputs/",
+  "system_prompt": "You are an expert code reviewer. Analyze the provided codebase for bugs, security issues, and correctness problems. Provide actionable feedback. All files are located in /tmp/files",
+  "task_prompt": "You are an expert code reviewer. Your task is to analyze the KAAP operator codebase (controllers, autoscaler, CRDs, and migration tool). Identify subtle bugs, security regressions, data consistency issues, and logic flaws. Focus on issues detectable via static analysis. Write your findings to /tmp/outputs/review.md.",
+  "rubric": [
+    {
+      "criterion": "Identifies the reschedule unit bug in operator/src/main/java/com/datastax/oss/kaap/controllers/AbstractController.java (reconcile) where rescheduleAfter uses TimeUnit.MILLISECONDS even though the configuration is in seconds, causing overly tight reconcile loops",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the set cleanup bug in operator/src/main/java/com/datastax/oss/kaap/controllers/AbstractResourceSetsController.java (cleanupDeletedSets) where the excludes set is passed as Set.of(), causing active sets to be treated as deletable and removed",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the config prefixing bug in operator/src/main/java/com/datastax/oss/kaap/controllers/BaseResourcesFactory.java (handleConfigPulsarPrefix) where all keys are prefixed with PULSAR_PREFIX_ even if they already start with PULSAR_/BOOKIE_, resulting in double-prefixed config keys",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the exec resource leak in operator/src/main/java/com/datastax/oss/kaap/autoscaler/AutoscalerUtils.java (execInPod) where ExecWatch and output streams are no longer closed on completion, leading to leaked connections over time",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the scale-down threshold bug in operator/src/main/java/com/datastax/oss/kaap/autoscaler/BookKeeperSetAutoscaler.java (internalRun) where the high watermark (diskUsageHwm) is used to gate scale-down decisions instead of the low watermark, preventing scale-down under normal conditions",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the PVC name swap in operator/src/main/java/com/datastax/oss/kaap/controllers/bookkeeper/BookKeeperResourcesFactory.java (getJournalPvPrefix/getLedgersPvPrefix) where journal and ledger volume names are swapped, leading to incorrect PVC naming",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the missing DNS SANs bug in operator/src/main/java/com/datastax/oss/kaap/controllers/utils/CertManagerCertificatesProvisioner.java (enumerateDnsNames) where namespace-qualified DNS names are omitted, causing TLS verification failures for some service hostnames",
+      "weight": 1
+    },
+    {
+      "criterion": "Identifies the pagination loss bug in migration-tool/src/main/java/com/datastax/oss/kaap/migrationtool/SpecGenerator.java (dumpOriginalResources) where resource listing is limited with withLimit(500) without handling pagination, leading to missing resources in diffs",
+      "weight": 1
+    }
+  ]
+}
