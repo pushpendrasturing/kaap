@@ -21,7 +21,7 @@
       "weight": 1
     },
     {
-      "criterion": "Identifies the autoscaler guard removal in operator/src/main/java/com/datastax/oss/kaap/controllers/PulsarClusterController.java (adjustBrokerReplicas) where replicas are copied even when broker autoscaler is disabled, overwriting user settings",
+      "criterion": "Identifies the ZooKeeper port selection bug in operator/src/main/java/com/datastax/oss/kaap/controllers/BaseResourcesFactory.java (getZkServers) where TLS and non-TLS client ports are swapped, breaking ZooKeeper connectivity under TLS configuration",
       "weight": 1
     },
     {
