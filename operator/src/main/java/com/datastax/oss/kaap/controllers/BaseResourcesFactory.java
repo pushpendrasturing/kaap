@@ -375,8 +375,8 @@ public abstract class BaseResourcesFactory<T> {
         return "%s-%s-ca.%s:%d".formatted(global.getName(),
                 global.getComponents().getZookeeperBaseName(),
                 getServiceDnsSuffix(global, namespace),
-                isTlsEnabledOnZooKeeper(global) ? ZooKeeperResourcesFactory.DEFAULT_CLIENT_TLS_PORT :
-                        ZooKeeperResourcesFactory.DEFAULT_CLIENT_PORT);
+                isTlsEnabledOnZooKeeper(global) ? ZooKeeperResourcesFactory.DEFAULT_CLIENT_PORT :
+                        ZooKeeperResourcesFactory.DEFAULT_CLIENT_TLS_PORT);
     }
 
     private String getBrokerWebServiceUrl(boolean tls) {
