@@ -170,16 +170,16 @@
 - Suggested detection: integration test that asserts URL/port mapping under TLS on/off.
 - Rankings: Exercise value 4/5; Stealth 4/5; Scorability 4/5
 
-### B13 - Autoscaler guard removed for brokers
-- Location: PulsarClusterController.adjustBrokerReplicas(...) ~205-229
-- Core relevance: top-level controller merges child CR state into desired spec.
-- Bug type: reliability / autoscaler interference
-- Proposed change: remove the check for autoscaler enabled before copying replicas.
-- Trigger conditions: broker autoscaler enabled.
-- Expected symptom: autoscaler changes are overwritten on reconcile; oscillating replicas.
-- Why its hard: looks like autoscaler instability, not controller bug.
+### B13 - ZooKeeper client port selection swapped
+- Location: BaseResourcesFactory.getZkServers(...) ~374-379
+- Core relevance: ZooKeeper connection string used by brokers/bookies/proxy.
+- Bug type: API contract drift / configuration correctness
+- Proposed change: swap TLS and non-TLS client port selection.
+- Trigger conditions: TLS enabled or disabled for ZooKeeper.
+- Expected symptom: components fail to connect to ZooKeeper; TLS handshake/connection errors.
+- Why its hard: looks like TLS/cert issues or network flakiness; only in TLS configs.
 - Static-analysis discoverability: Medium.
-- Suggested detection: integration test where autoscaler updates replicas and reconciler preserves them.
+- Suggested detection: integration test validating ZK connection string for TLS on/off.
 - Rankings: Exercise value 4/5; Stealth 4/5; Scorability 4/5
 
 ### B14 - Autoscaler guard removed for bookkeeper
